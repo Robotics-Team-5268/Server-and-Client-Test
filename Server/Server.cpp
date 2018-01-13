@@ -7,6 +7,7 @@
 // If you want to add more variables, add them to the end (after area)
 
 #include<iostream>
+#include<sstream>
 #include<vector>
 #include<arpa/inet.h>
 #include<unistd.h>
@@ -24,6 +25,7 @@ char buffer[256]; // Don't access this outside of receive
 void setupReceiveSocket();
 string receive();
 vector<string> split(string str, string delimiter);
+int strToInt(string str);
 
 int main() {
   setupReceiveSocket();
@@ -46,6 +48,15 @@ int main() {
 // TODO: convert the properrties to ints and store in their respective vectors
       }
 
+      centerX.push_back(strToInt(properties[0]));
+      centerY.push_back(strToInt(properties[1]));
+      width.push_back(strToInt(properties[2]));
+      height.push_back(strToInt(properties[3]));
+      area.push_back(strToInt(properties[4]));
+    }
+
+    for (int k = 0; k < area.size(); k++) {
+      cout << "   Area: " << area[k] << endl;
     }
   }
 }
@@ -64,6 +75,13 @@ vector<string> split(string str, string delimiter) {
         }
     }
     return result;
+}
+
+int strToInt(string str) {
+  stringstream stream(str);
+  int num = 0;
+  stream >> num;
+  return num;
 }
 
 string receive() {
